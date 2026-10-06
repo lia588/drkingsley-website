@@ -1,0 +1,32 @@
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME
+  branch: main
+media_folder: uploads
+public_folder: /uploads
+collections:
+  - name: content
+    label: Website Content
+    files:
+      - name: publications
+        label: Publications & Books
+        file: content/publications.json
+        format: json
+        fields:
+          - { name: journals, label: Journal Articles, widget: list, summary: "{{fields.year}} – {{fields.title}}", fields: &pub [ {name: authors, label: Authors}, {name: year, label: Year}, {name: title, label: Title}, {name: venue, label: Journal / Details, required: false}, {name: link, label: Link (DOI or URL), required: false} ] }
+          - { name: books, label: Books, widget: list, summary: "{{fields.year}} – {{fields.title}}", fields: *pub }
+          - { name: other, label: Other Publications, widget: list, summary: "{{fields.year}} – {{fields.title}}", fields: *pub }
+      - name: sermons
+        label: Sermons (Audio)
+        file: content/sermons.json
+        format: json
+        fields:
+          - name: sermons
+            label: Sermons
+            widget: list
+            summary: "{{fields.date}} – {{fields.title}}"
+            fields:
+              - { name: title, label: Title }
+              - { name: date, label: Date }
+              - { name: description, label: Short description, widget: text, required: false }
+              - { name: audio, label: Audio file (mp3), widget: file }
